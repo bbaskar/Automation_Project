@@ -33,3 +33,19 @@ tar cvf /tmp/$filename /var/log/apache2/*.log
 
 # Run the AWS CLI command and copy the archive to the s3 bucket
 aws s3 cp /tmp/$filename s3://$s3Bucket/
+
+# Bookkeeping
+filesize=$(find /tmp/"$filename" -printf "%s")
+htmlFile=/var/www/html/index.html
+if [ ! -f "$htmlFile" ]; then
+    touch $htmlFile
+	echo Log Type$'\t'Time Created$'\t'Type$'\t'Size >> $htmlFile
+else
+	echo httpd-logs$'\t'${timestamp}$'\t'tar$'\t'${filesize}K >> $htmlFile
+fi
+
+# Cron Job
+cron=/etc/cron.d/automation
+if [ ! -f "$cron" ]; then
+    echo "0 0 * * * root /root/Automation_Project/automation.sh" > $cron
+fi
