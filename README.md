@@ -1,4 +1,4 @@
-# upgrad-automation
+# upgrad-shell-scripting
 upGrad - PG Certification in Dev Ops - Dec '20
 
 1) Perform an update of the package details and the package list at the start of the script.
